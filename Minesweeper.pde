@@ -41,8 +41,14 @@ public void draw ()
     displayWinningMessage();
   }
 }
-public boolean isWon(){
-   
+public boolean isWon()
+{
+  for(int i = 0; i < mines.size(); i++){
+      if(mines.get(i).isFlagged() == false){
+        return false;
+      }
+     }
+    return true;
 }
 
 public void displayLosingMessage()
