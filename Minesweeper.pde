@@ -26,8 +26,8 @@ void setup ()
 public void setMines()
 {
   while(mines.size()<NUM_MINES) {
-  int r = (int)(Math.random()*(NUM_ROWS-1));
-  int c = (int)(Math.random()*(NUM_COLS-1));
+  int r = (int)(Math.random()*(NUM_ROWS));
+  int c = (int)(Math.random()*(NUM_COLS));
   if(!mines.contains(buttons[r][c])){
     mines.add(buttons[r][c]);
   }
@@ -42,8 +42,12 @@ public void draw ()
 }
 public boolean isWon()
 {
-  //your code here
-  return false;
+  for(int i=0; i<mines.size(); i++){
+     if(mines.get(i).isFlagged() == false){
+       return false;
+     }
+    }
+  return true;
 }
 public void displayLosingMessage()
 {
@@ -51,7 +55,11 @@ public void displayLosingMessage()
 }
 public void displayWinningMessage()
 {
-  //your code here
+  if(isWon()==true){
+  fill(0,256,0);
+  rect(100,100,20,20);
+  text("YOU WIN!!!",100,100);
+}
 }
 public boolean isValid(int r, int c)
 {
@@ -72,7 +80,7 @@ public int countMines(int row, int col)
    for(int c= col-1; c<=col+1; c++){
      if(mines.contains(buttons[r][c])&&isValid(r,c)){
              numMines++;
-          }
+       }
      }
    }
   return numMines;
@@ -101,8 +109,31 @@ public class MSButton
   public void mousePressed () 
   {
     clicked = true;
-    //your code here
+    if(mouseButton == RIGHT) {
+      if(flagged==true){
+       flagged=false;
+       clicked=false;
+      }
+      else if(flagged==false){
+        flagged=true;
+        clicked=false;
+      }
+  } else if(mines.contains(this)){
+       displayLosingMessage();
+  } else if(countMines(myRow,myCol)>0){
+       setLabel(countMines(myRow,myCol));
+  } else {
+        if(isValid(myRow, myCol) && !mines.contains(buttons[myRow][myCol])){
+          for(int r = myRow-1; r<=myRow+1; r++){
+            for(int c= myCol-1; c<=myCol+1; c++){
+              if(isValid(r,c) && buttons[r][c].clicked==true){
+              buttons[r][c].mousePressed();
+              }
+            }
+          }
+        }
   }
+}
   public void draw () 
   {    
     if (flagged)
