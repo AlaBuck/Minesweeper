@@ -149,3 +149,37 @@ public class MSButton
     myLabel = ""+ newLabel;
   }
 }
+/*
+public boolean isWon()
+{  
+  
+  return false;
+}
+public void displayLosingMessage()
+{  
+    
+    for(int i=0;i<bombs.size();i++)
+        if(bombs.get(i).isClicked()==false)
+            bombs.get(i).mousePressed();
+    isLost = true;
+    buttons[rows/2][(columns/2)-4].setLabel("Y");
+    buttons[rows/2][(columns/2)-3].setLabel("O");
+    buttons[rows/2][(columns/2-2)].setLabel("U");
+    buttons[rows/2][(columns/2-1)].setLabel("");
+    buttons[rows/2][(columns/2)].setLabel("L");
+    buttons[rows/2][(columns/2+1)].setLabel("O");
+    buttons[rows/2][(columns/2+2)].setLabel("S");
+    buttons[rows/2][(columns/2+3)].setLabel("E");
+}
+public void displayWinningMessage()
+{
+    isLost = true;
+    buttons[rows/2][(columns/2)-4].setLabel("Y");
+    buttons[rows/2][(columns/2)-3].setLabel("O");
+    buttons[rows/2][(columns/2-2)].setLabel("U");
+    buttons[rows/2][(columns/2-1)].setLabel("");
+    buttons[rows/2][(columns/2)].setLabel("W");
+    buttons[rows/2][(columns/2+1)].setLabel("I");
+    buttons[rows/2][(columns/2+2)].setLabel("N");
+    buttons[rows/2][(columns/2+3)].setLabel("!");
+}
