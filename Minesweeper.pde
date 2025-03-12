@@ -9,18 +9,16 @@ void setup ()
 {
   size(400, 400);
   textAlign(CENTER, CENTER);
+  Interactive.make(this);
   textSize(50);
 
-  // make the manager
-  Interactive.make( this );
-
+  mines = new ArrayList <MSButton>();
   buttons = new MSButton[NUM_ROWS][NUM_COLS];
   for (int r=0; r<NUM_ROWS; r++) {
     for (int c=0; c<NUM_COLS; c++) {
       buttons[r][c]= new MSButton(r, c);
     }
   }
-
   setMines();
 }
 public void setMines()
@@ -41,37 +39,30 @@ public void draw ()
     displayWinningMessage();
   }
 }
-public boolean isWon()
-{
-  for(int i = 0; i < mines.size(); i++){
-      if(mines.get(i).isFlagged() == false){
-        return false;
-      }
-     }
+public boolean isWon() {
+    for (int row = 0; row < NUM_ROWS; row++) {
+        for (int col = 0; col < NUM_COLS; col++) {
+            MSButton button = buttons[row][col];
+            if (!mines.contains(button) && !button.clicked) {
+                return false;
+            }
+        }
+    }
     return true;
 }
-
-public void displayLosingMessage()
-{
-  //your code here
+public void displayWinningMessage() {
+    for (MSButton mine : mines) {
+        mine.setLabel("You Lose!"); 
+    }
 }
-public void displayWinningMessage()
-{
-  fill(0,255,0);
-  rect(200,200,100,100);
-  text("YOU WIN!!!",200,200);
+public void displayLosingMessage() {
+    for (MSButton mine : mines) {
+        mine.setLabel(""); 
+    }
 }
 public boolean isValid(int r, int c)
 {
-  if(r>=0&&r<=4){
-    if(c>=0&&c<=4){
-      return true;
-    }
-    return false;
-  }
-  else{
-    return false;
-  }
+  return (r >= 0 && r < NUM_ROWS && c>=0 && c<NUM_COLS);
 }
 public int countMines(int row, int col)
 {
@@ -139,12 +130,12 @@ public class MSButton
     if (flagged)
       fill(0);
     else if( clicked && mines.contains(this) ) 
-         fill(255,0,0);
+      fill(255,0,0);
     else if (clicked)
       fill( 200 );
-    else 
-    fill( 100 );
-
+    else{ 
+      fill( 100 );
+    }
     rect(x, y, width, height);
     fill(0);
     text(myLabel, x+width/2, y+height/2);
@@ -156,9 +147,5 @@ public class MSButton
   public void setLabel(int newLabel)
   {
     myLabel = ""+ newLabel;
-  }
-  public boolean isFlagged()
-  {
-    return flagged;
   }
 }
