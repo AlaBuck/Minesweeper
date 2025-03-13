@@ -37,6 +37,7 @@ public void displayWinningMessage()
 {
     if(isWon()){
     isLost = true;
+    fill(0,255,0);
     buttons[NUM_ROWS/2][(NUM_COLS/2)-4].setLabel("Y");
     buttons[NUM_ROWS/2][(NUM_COLS/2)-3].setLabel("O");
     buttons[NUM_ROWS/2][(NUM_COLS/2-2)].setLabel("U");
@@ -161,6 +162,7 @@ public class MSButton
         if(mines.get(i).clicked==false)
             mines.get(i).mousePressed();
     isLost = true;
+    fill(255,0,0);
     buttons[NUM_COLS/2][(NUM_COLS/2)-4].setLabel("Y");
     buttons[NUM_COLS/2][(NUM_COLS/2)-3].setLabel("O");
     buttons[NUM_COLS/2][(NUM_COLS/2-2)].setLabel("U");
