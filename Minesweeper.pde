@@ -1,17 +1,19 @@
 import de.bezier.guido.*;
-public final static int NUM_ROWS = 5;
-public final static int NUM_COLS = 5;
-public int NUM_MINES = 4;
+public final static int NUM_ROWS = 20;
+public final static int NUM_COLS = 20;
+public int NUM_MINES = 10;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines = new ArrayList<MSButton>(); //ArrayList of just the minesweeper buttons that are mined
-
+boolean isLost = false;
 void setup ()
 {
   size(400, 400);
   textAlign(CENTER, CENTER);
   Interactive.make(this);
-  textSize(50);
-
+  textSize(20);
+  if(isLost){
+    mousePressed();
+  }
   mines = new ArrayList <MSButton>();
   buttons = new MSButton[NUM_ROWS][NUM_COLS];
   for (int r=0; r<NUM_ROWS; r++) {
@@ -31,6 +33,20 @@ public void setMines()
   }
 }
 }
+public void displayWinningMessage()
+{
+    if(isWon()){
+    isLost = true;
+    buttons[NUM_ROWS/2][(NUM_COLS/2)-4].setLabel("Y");
+    buttons[NUM_ROWS/2][(NUM_COLS/2)-3].setLabel("O");
+    buttons[NUM_ROWS/2][(NUM_COLS/2-2)].setLabel("U");
+    buttons[NUM_ROWS/2][(NUM_COLS/2-1)].setLabel("");
+    buttons[NUM_ROWS/2][(NUM_COLS/2)].setLabel("W");
+    buttons[NUM_ROWS/2][(NUM_COLS/2+1)].setLabel("I");
+    buttons[NUM_ROWS/2][(NUM_COLS/2+2)].setLabel("N");
+    buttons[NUM_ROWS/2][(NUM_COLS/2+3)].setLabel("!");
+    }
+}
 
 public void draw ()
 {
@@ -49,16 +65,6 @@ public boolean isWon() {
         }
     }
     return true;
-}
-public void displayWinningMessage() {
-    for (MSButton mine : mines) {
-        mine.setLabel("You Lose!"); 
-    }
-}
-public void displayLosingMessage() {
-    for (MSButton mine : mines) {
-        mine.setLabel(""); 
-    }
 }
 public boolean isValid(int r, int c)
 {
@@ -148,38 +154,20 @@ public class MSButton
   {
     myLabel = ""+ newLabel;
   }
-}
-/*
-public boolean isWon()
-{  
-  
-  return false;
-}
-public void displayLosingMessage()
+  public void displayLosingMessage()
 {  
     
-    for(int i=0;i<bombs.size();i++)
-        if(bombs.get(i).isClicked()==false)
-            bombs.get(i).mousePressed();
+    for(int i=0;i<mines.size();i++)
+        if(mines.get(i).clicked==false)
+            mines.get(i).mousePressed();
     isLost = true;
-    buttons[rows/2][(columns/2)-4].setLabel("Y");
-    buttons[rows/2][(columns/2)-3].setLabel("O");
-    buttons[rows/2][(columns/2-2)].setLabel("U");
-    buttons[rows/2][(columns/2-1)].setLabel("");
-    buttons[rows/2][(columns/2)].setLabel("L");
-    buttons[rows/2][(columns/2+1)].setLabel("O");
-    buttons[rows/2][(columns/2+2)].setLabel("S");
-    buttons[rows/2][(columns/2+3)].setLabel("E");
+    buttons[NUM_COLS/2][(NUM_COLS/2)-4].setLabel("Y");
+    buttons[NUM_COLS/2][(NUM_COLS/2)-3].setLabel("O");
+    buttons[NUM_COLS/2][(NUM_COLS/2-2)].setLabel("U");
+    buttons[NUM_COLS/2][(NUM_COLS/2-1)].setLabel("");
+    buttons[NUM_COLS/2][(NUM_COLS/2)].setLabel("L");
+    buttons[NUM_COLS/2][(NUM_COLS/2+1)].setLabel("O");
+    buttons[NUM_COLS/2][(NUM_COLS/2+2)].setLabel("S");
+    buttons[NUM_COLS/2][(NUM_COLS/2+3)].setLabel("E");
 }
-public void displayWinningMessage()
-{
-    isLost = true;
-    buttons[rows/2][(columns/2)-4].setLabel("Y");
-    buttons[rows/2][(columns/2)-3].setLabel("O");
-    buttons[rows/2][(columns/2-2)].setLabel("U");
-    buttons[rows/2][(columns/2-1)].setLabel("");
-    buttons[rows/2][(columns/2)].setLabel("W");
-    buttons[rows/2][(columns/2+1)].setLabel("I");
-    buttons[rows/2][(columns/2+2)].setLabel("N");
-    buttons[rows/2][(columns/2+3)].setLabel("!");
 }
